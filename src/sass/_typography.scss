@@ -1,0 +1,81 @@
+@import "/src/sass/colors";
+
+h1, h2, h3, h4, p {
+  font-weight: 400;
+  color: $clr-white-90;
+}
+
+h1 {
+  font-size: 2rem;
+  letter-spacing: 1px;
+}
+
+.h1-fw-300 {
+  font-weight: 300;
+}
+
+.h1-fw-500 {
+  font-weight: 500;
+  letter-spacing: 2px;
+}
+
+h2 {
+  font-size: 1.75rem;
+  letter-spacing: 1px;
+}
+
+.h2-fw-300 {
+  font-weight: 300;
+}
+
+.h2-fw-500 {
+  font-weight: 500;
+  letter-spacing: 2px;
+}
+
+h3 {
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+}
+
+.h3-fw-300 {
+  font-weight: 300;
+}
+
+.h3-fw-500 {
+  font-weight: 500;
+  letter-spacing: 2px;
+}
+
+h4 {
+  font-size: 1.25rem;
+  letter-spacing: 1px;
+}
+
+.h4-fw-300 {
+  font-weight: 300;
+}
+
+.h4-fw-500 {
+  font-weight: 500;
+  letter-spacing: 2px;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.p-fw-300 {
+  font-weight: 300;
+}
+
+.p-fw-500 {
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.p-fw-700 {
+  font-weight: 700;
+  letter-spacing: 1px;
+}
