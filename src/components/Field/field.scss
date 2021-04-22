@@ -1,12 +1,14 @@
 @import "sass/colors";
 
+$fieldSize: 40px;
+
 .field {
   align-items: center;
   background-color: $clr-neutral-80;
   display: flex;
-  height: 32px;
+  height: #{$fieldSize};
   justify-content: center;
-  width: 32px;
+  width: #{$fieldSize};
 
   &:hover {
     background-color: $clr-neutral-60;

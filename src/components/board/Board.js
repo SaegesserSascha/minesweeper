@@ -1,5 +1,5 @@
 import Field from "components/Field/Field";
-import React from "react";
+import React, { useRef } from "react";
 import uuid from "react-uuid";
 import "./board.scss";
 
@@ -8,12 +8,18 @@ function Board() {
   const COLUMNS = 10;
   const ROWS = 10;
 
+  const boardRef = useRef(null);
+
   const boardMatrix =
     new Array(COLUMNS).fill(0).map(() =>
       new Array(ROWS).fill(0));
 
   return (
-    <div id="board">
+    <div
+      id="board"
+      ref={boardRef}
+      onContextMenu={(e) => e.preventDefault()}
+    >
       {boardMatrix.map((column) => {
         return (
           <ul key={uuid()}>
