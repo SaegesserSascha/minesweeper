@@ -2,18 +2,4 @@
   align-items: center;
   display: flex;
   justify-content: center;
-
-  & > ul {
-    border-width: 1px 0px 1px 1px;
-    border-style: solid;
-    border-color: black;
-
-    &:last-child {
-      border-right: 1px solid black;
-    }
-
-    & > li:not(:last-child) {
-      border-bottom: 1px solid black;
-    }
-  }
 }

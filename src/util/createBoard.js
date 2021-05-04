@@ -10,9 +10,8 @@ const createBoard = (ROWS, COLUMNS, MINES) => {
         x: i,
         y: j,
         value: 0,
-        neighborMinesCount: 0,
-        flagged: false,
-        revealed: false
+        isFlagged: false,
+        isRevealed: false
       });
     }
     boardMatrix.push(column);
