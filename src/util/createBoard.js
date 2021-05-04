@@ -36,51 +36,34 @@ const createBoard = (ROWS, COLUMNS, MINES) => {
 }
 
 function calculateNeighborMinesCount(boardMatrix, ROWS, COLUMNS) {
-  for (let i = 0; i < ROWS; i++) {
-    for (let j = 0; j < COLUMNS; j++) {
-      if (boardMatrix[i][j].value === "X") continue;
+  const neighborDeltas = [
+    [-1, +0],
+    [-1, +1],
+    [+0, +1],
+    [+1, +1],
+    [+1, +0],
+    [+1, -1],
+    [+0, -1],
+    [-1, -1]
+  ];
 
-      // Top
-      if (i > 0 && boardMatrix[i - 1][j].value === "X") {
-        boardMatrix[i][j].value++;
-      }
+  for (let x = 0; x < ROWS; x++) {
+    for (let y = 0; y < COLUMNS; y++) {
+      if (boardMatrix[x][y].value === "X") continue;
 
-      // Top-right
-      if (i > 0 && j < COLUMNS - 1 && boardMatrix[i - 1][j + 1].value === "X") {
-        boardMatrix[i][j].value++;
-      }
-
-      // Right
-      if (j < COLUMNS - 1 && boardMatrix[i][j + 1].value === "X") {
-        boardMatrix[i][j].value++;
-      }
-
-      // Bottom-right
-      if (i < ROWS - 1 && j < COLUMNS - 1 && boardMatrix[i + 1][j + 1].value === "X") {
-        boardMatrix[i][j].value++;
-      }
-
-      // Bottom
-      if (i < ROWS - 1 && boardMatrix[i + 1][j].value === "X") {
-        boardMatrix[i][j].value++;
-      }
-
-      // Bottom-left
-      if (i < ROWS - 1 && j > 0 && boardMatrix[i + 1][j - 1].value === "X") {
-        boardMatrix[i][j].value++;
-      }
-
-      // Left
-      if (j > 0 && boardMatrix[i][j - 1].value === "X") {
-        boardMatrix[i][j].value++;
-      }
-
-      // Top-left
-      if (i > 0 && j > 0 && boardMatrix[i - 1][j - 1].value === "X") {
-        boardMatrix[i][j].value++;
-      }
+      neighborDeltas.forEach(delta => {
+        if (checkNeighbor(boardMatrix, x + delta[0], y + delta[1], ROWS, COLUMNS)) {
+          boardMatrix[x][y].value++;
+        }
+      });
     }
   }
+}
+
+function checkNeighbor(boardMatrix, x, y, ROWS, COLUMNS) {
+  if (x < 0 || x > ROWS - 1 || y < 0 || y > COLUMNS - 1) return;
+
+  if (boardMatrix[x][y].value === "X") return true;
 }
 
 export default createBoard;
