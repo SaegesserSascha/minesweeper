@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import "./field.scss";
 
 function Field() {
-  const [isBomb, setIsBomb] = useState(false);
-  const [neighborBombsCount, setNeighborBombsCount] = useState(0);
+  const [isMine, setIsMine] = useState(false);
+  const [neighborMinesCount, setNeighborMinesCount] = useState(0);
   const [isFlagged, setIsFlagged] = useState(false);
   const [isRevealed, setIsRevealed] = useState(false);
 
@@ -28,6 +28,10 @@ function Field() {
 
   function toggleFlag() {
     setIsFlagged(currentValue => !currentValue);
+  }
+
+  function setMine() {
+    setIsMine(true);
   }
 
   return (
