@@ -12,6 +12,10 @@ function App() {
     setIsVictory(isVictory);
   }
 
+  function restart() {
+    window.location.reload();
+  }
+
   useEffect(() => {
     const timer = setInterval(() => {
       setClock(clock => clock + 1);
@@ -30,7 +34,9 @@ function App() {
       <Board
         gameOverIsVictory={gameOverIsVictory}
       />
-      {isVictory !== undefined ? <EndScreen isVictory={isVictory} /> : ""}
+      {isVictory !== undefined
+      ? <EndScreen isVictory={isVictory} restart={restart} />
+      : ""}
     </div>
   );
 }
