@@ -5,7 +5,7 @@ import uuid from "react-uuid";
 import "./board.scss";
 import revealFields from "util/revealFields";
 
-function Board({ displayWin, displayGameOver}) {
+function Board({ gameOverIsVictory }) {
   // TODO Use UI element to select columns and row? Difficulty settings?
   const COLUMNS = 10;
   const ROWS = 10;
@@ -22,14 +22,14 @@ function Board({ displayWin, displayGameOver}) {
 
   useEffect(() => {
     if (safeFieldsRemaining <= 0) {
-      displayWin();
+      gameOverIsVictory(true);
     }
   }, [safeFieldsRemaining]);
 
   const revealField = (x, y) => {
     if (boardMatrix[x][y].isFlagged || boardMatrix[x][y].isRevealed) return;
     if (boardMatrix[x][y].value === "X") {
-      displayGameOver();
+      gameOverIsVictory(false);
     }
 
     const boardMatrixCopy = [...boardMatrix];
@@ -56,7 +56,6 @@ function Board({ displayWin, displayGameOver}) {
         }
       });
     });
-    console.log(fieldsRemaining);
     setSafeFieldsRemaining(fieldsRemaining);
   }
 

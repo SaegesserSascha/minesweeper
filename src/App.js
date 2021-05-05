@@ -1,27 +1,36 @@
 import Board from 'components/board/Board';
-import { useState } from 'react';
+import EndScreen from 'components/endScreen/EndScreen';
+import Header from 'components/header/Header';
+import { useEffect, useState } from 'react';
 import './App.scss';
 
 function App() {
-  const [victory, setVictory] = useState(false);
-  const [defeat, setDefeat] = useState(false);
+  const [isVictory, setIsVictory] = useState(undefined);
+  const [clock, setClock] = useState(0);
 
-  function displayWin() {
-    setVictory(true);
-    console.log("You Win! PogChamp");
+  function gameOverIsVictory(isVictory) {
+    setIsVictory(isVictory);
   }
 
-  function displayGameOver() {
-    setDefeat(true);
-    console.log("You lost! sadge");
-  }
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setClock(clock => clock + 1);
+    }, 1000);
+
+    if (isVictory !== undefined) {
+      clearInterval(timer);
+    };
+
+    return () => clearInterval(timer);
+  }, [isVictory]);
 
   return (
     <div className="App">
+      <Header clock={clock} />
       <Board
-        displayWin={displayWin}
-        displayGameOver={displayGameOver}
+        gameOverIsVictory={gameOverIsVictory}
       />
+      {isVictory !== undefined ? <EndScreen isVictory={isVictory} /> : ""}
     </div>
   );
 }
