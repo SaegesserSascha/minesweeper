@@ -1,6 +1,8 @@
-const revealFields = (boardMatrix, x, y, ROWS, COLUMNS) => {
-  boardMatrix[x][y].isRevealed = true;
-  boardMatrix[x][y].isFlagged = false;
+function revealFields(boardMatrix, x, y, ROWS, COLUMNS) {
+  if (!boardMatrix[x][y].isRevealed) {
+    boardMatrix[x][y].isRevealed = true;
+    boardMatrix[x][y].isFlagged = false;
+  }
 
   if (boardMatrix[x][y].value === "X" || boardMatrix[x][y].value > 0) {
     return boardMatrix;

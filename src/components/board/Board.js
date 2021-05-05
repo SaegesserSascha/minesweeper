@@ -5,24 +5,36 @@ import uuid from "react-uuid";
 import "./board.scss";
 import revealFields from "util/revealFields";
 
-function Board() {
+function Board({ displayWin, displayGameOver}) {
   // TODO Use UI element to select columns and row? Difficulty settings?
   const COLUMNS = 10;
   const ROWS = 10;
-  const MINES = 10;
+  const MINES = 2;
+  const SAFEFIELDS = COLUMNS * ROWS - MINES;
 
   const [boardMatrix, setBoardMatrix] = useState([]);
+  const [safeFieldsRemaining, setSafeFieldsRemaining] = useState(COLUMNS * ROWS - MINES);
 
   useEffect(() => {
     const boardMatrix = createBoard(COLUMNS, ROWS, MINES);
     setBoardMatrix(boardMatrix);
   }, []);
 
+  useEffect(() => {
+    if (safeFieldsRemaining <= 0) {
+      displayWin();
+    }
+  }, [safeFieldsRemaining]);
+
   const revealField = (x, y) => {
-    if (boardMatrix[x][y].isFlagged) return;
+    if (boardMatrix[x][y].isFlagged || boardMatrix[x][y].isRevealed) return;
+    if (boardMatrix[x][y].value === "X") {
+      displayGameOver();
+    }
 
     const boardMatrixCopy = [...boardMatrix];
     const updatedBoardMatrix = revealFields(boardMatrixCopy, x, y, ROWS, COLUMNS);
+    updateSafeFieldsRemaining(updatedBoardMatrix);
     setBoardMatrix(updatedBoardMatrix);
   }
 
@@ -33,6 +45,19 @@ function Board() {
     let boardMatrixCopy = [...boardMatrix];
     boardMatrixCopy[x][y].isFlagged = !boardMatrixCopy[x][y].isFlagged;
     setBoardMatrix(boardMatrixCopy);
+  }
+
+  function updateSafeFieldsRemaining(boardMatrix) {
+    let fieldsRemaining = SAFEFIELDS;
+    boardMatrix.forEach((row) => {
+      row.forEach((field) => {
+        if (field.isRevealed && field.value !== "X") {
+          fieldsRemaining--;
+        }
+      });
+    });
+    console.log(fieldsRemaining);
+    setSafeFieldsRemaining(fieldsRemaining);
   }
 
   const board = boardMatrix.map(row => {
