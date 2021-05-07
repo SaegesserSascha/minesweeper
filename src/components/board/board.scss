@@ -1,5 +1,53 @@
+@import "sass/colors";
+
 #board {
   align-items: center;
   display: flex;
   justify-content: center;
+}
+
+.column-even > .field[data-isRevealed=false] {
+  &:nth-of-type(even) {
+    background-color: $clr-field;
+  }
+
+  &:nth-of-type(odd) {
+    background-color: $clr-field-alternative;
+  }
+}
+
+.column-odd > .field[data-isRevealed=false] {
+  &:nth-of-type(even) {
+    background-color: $clr-field-alternative;
+  }
+
+  &:nth-of-type(odd) {
+    background-color: $clr-field;
+  }
+}
+
+.column-even > .field[data-isRevealed=true] {
+  &:nth-of-type(even) {
+    background-color: $clr-field-revealed;
+  }
+
+  &:nth-of-type(odd) {
+    background-color: $clr-field-revealed-alternative;
+  }
+}
+
+.column-odd > .field[data-isRevealed=true] {
+  &:nth-of-type(even) {
+    background-color: $clr-field-revealed-alternative;
+  }
+
+  &:nth-of-type(odd) {
+    background-color: $clr-field-revealed;
+  }
+}
+
+.column-even > .field[data-isRevealed=false]:hover,
+.column-odd > .field[data-isRevealed=false]:hover {
+  background-color: $clr-field-hover;
+  cursor: pointer;
 }

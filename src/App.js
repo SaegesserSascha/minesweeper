@@ -1,4 +1,5 @@
 import Board from 'components/board/Board';
+import BoardSizeContext from 'components/context/BoardSizeContext';
 import EndScreen from 'components/endScreen/EndScreen';
 import Header from 'components/header/Header';
 import { useEffect, useState } from 'react';
@@ -30,13 +31,15 @@ function App() {
 
   return (
     <div className="App">
-      <Header clock={clock} />
-      <Board
-        gameOverIsVictory={gameOverIsVictory}
-      />
-      {isVictory !== undefined
-      ? <EndScreen isVictory={isVictory} restart={restart} />
-      : ""}
+      <BoardSizeContext.Provider value={300}>
+        <Header clock={clock} />
+        <Board
+          gameOverIsVictory={gameOverIsVictory}
+        />
+        {isVictory !== undefined
+          ? <EndScreen isVictory={isVictory} restart={restart} />
+          : ""}
+      </BoardSizeContext.Provider>
     </div>
   );
 }

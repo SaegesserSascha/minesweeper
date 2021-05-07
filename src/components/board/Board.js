@@ -1,5 +1,5 @@
 import Field from "components/Field/Field";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import createBoard from "util/createBoard";
 import uuid from "react-uuid";
 import "./board.scss";
@@ -9,8 +9,10 @@ function Board({ gameOverIsVictory }) {
   // TODO Use UI element to select columns and row? Difficulty settings?
   const COLUMNS = 10;
   const ROWS = 10;
-  const MINES = 2;
+  const MINES = 15;
   const SAFEFIELDS = COLUMNS * ROWS - MINES;
+
+  const ref = useRef(null);
 
   const [boardMatrix, setBoardMatrix] = useState([]);
   const [safeFieldsRemaining, setSafeFieldsRemaining] = useState(COLUMNS * ROWS - MINES);
@@ -25,6 +27,10 @@ function Board({ gameOverIsVictory }) {
       gameOverIsVictory(true);
     }
   }, [safeFieldsRemaining]);
+
+  useEffect(() => {
+    console.log(ref.current ? ref.current.offsetWidth : 0);
+  }, [ref.current]);
 
   const revealField = (x, y) => {
     if (boardMatrix[x][y].isFlagged || boardMatrix[x][y].isRevealed) return;
@@ -49,8 +55,8 @@ function Board({ gameOverIsVictory }) {
 
   function updateSafeFieldsRemaining(boardMatrix) {
     let fieldsRemaining = SAFEFIELDS;
-    boardMatrix.forEach((row) => {
-      row.forEach((field) => {
+    boardMatrix.forEach((column) => {
+      column.forEach((field) => {
         if (field.isRevealed && field.value !== "X") {
           fieldsRemaining--;
         }
@@ -59,26 +65,32 @@ function Board({ gameOverIsVictory }) {
     setSafeFieldsRemaining(fieldsRemaining);
   }
 
-  const board = boardMatrix.map(row => {
+  const board = boardMatrix.map((column, index) => {
     return (
-      <div key={uuid()} className="row">
-        {row.map(field => {
-          return (
-            <Field
-              key={uuid()}
-              data={field}
-              toggleFlag={toggleFlag}
-              revealField={revealField}
-            />
-          );
-        })}
-      </div>
+      <div
+        key={uuid()}
+        className={(index % 2 === 0) ? `column-even` : `column-odd`}
+      >
+        {
+          column.map(field => {
+            return (
+              <Field
+                key={uuid()}
+                data={field}
+                toggleFlag={toggleFlag}
+                revealField={revealField}
+              />
+            );
+          })
+        }
+      </div >
     );
   });
 
   return (
     <div
       id="board"
+      ref={ref}
       onContextMenu={(e) => e.preventDefault()}
     >
       {board}

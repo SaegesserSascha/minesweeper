@@ -1,0 +1,19 @@
+@import "sass/colors";
+
+.header {
+  align-items: center;
+  background-color: $clr-header;
+  display: flex;
+  height: 60px;
+  justify-content: space-around;
+}
+
+.timer {
+  align-items: center;
+  display: flex;
+  gap: .5em;
+
+  & * {
+    color: $clr-white;
+  }
+}
