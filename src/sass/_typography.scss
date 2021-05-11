@@ -1,8 +1,9 @@
 @import "/src/sass/colors";
 
 h1, h2, h3, h4, p {
-  font-weight: 400;
   color: black;
+  font-weight: 400;
+  letter-spacing: 1px;
 }
 
 h1 {

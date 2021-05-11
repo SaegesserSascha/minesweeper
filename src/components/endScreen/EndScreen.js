@@ -1,10 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import "./endScreen.scss";
+import { VscDebugRestart } from "react-icons/vsc";
+import { AiOutlineClockCircle, AiOutlineTrophy } from "react-icons/ai";
 
-function EndScreen({ isVictory, restart }) {
+function EndScreen({ isVictory, restart, finalTime, highScore }) {
+  const RESTARTICONSIZE = 24;
+  const TIMEICONSIZE = 54;
+
+  function displayWin() {
+    return (
+      <div>
+        <div
+          className="restart-btn"
+          onClick={restart}
+        >
+          <VscDebugRestart size={RESTARTICONSIZE} />
+          <h3>Noch mal spielen?</h3>
+        </div>
+      </div>
+    );
+  }
+
+  function displayLose() {
+    return (
+      <div>
+        <div
+          className="restart-btn"
+          onClick={restart}
+        >
+          <VscDebugRestart size={RESTARTICONSIZE} />
+          <h3>Erneut versuchen?</h3>
+        </div>
+      </div>
+    );
+  }
+  
+  function formatTime(time) {
+    const formattedTime = time.toString().padStart(3, "0");
+    return formattedTime;
+  }
+
   return (
-    <div>
-      <h1>{isVictory.toString()}</h1>
-      <button onClick={restart}>Try again?</button>
+    <div className="endscreen-modal-wrapper">
+      <div className="endscreen-modal">
+        <div className="time-wrapper">
+          <div className="final-time-wrapper">
+            <AiOutlineClockCircle size={TIMEICONSIZE} />
+            <h1>{isVictory ? formatTime(finalTime) : "---"}</h1>
+          </div>
+          <div className="highscore-time-wrapper">
+            <AiOutlineTrophy size={TIMEICONSIZE} />
+            <h1>{highScore < 1000 ? formatTime(highScore) : "---"}</h1>
+          </div>
+        </div>
+        {isVictory ? displayWin() : displayLose()}
+      </div>
     </div>
   );
 }

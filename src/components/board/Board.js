@@ -1,15 +1,15 @@
-import Field from "components/Field/Field";
+import Field from "components/field/Field";
 import React, { useEffect, useRef, useState } from "react";
 import createBoard from "util/createBoard";
 import uuid from "react-uuid";
 import "./board.scss";
 import revealFields from "util/revealFields";
 
-function Board({ gameOverIsVictory }) {
+function Board({ gameIsRunning, gameOverIsVictory }) {
   // TODO Use UI element to select columns and row? Difficulty settings?
   const COLUMNS = 10;
   const ROWS = 10;
-  const MINES = 15;
+  const MINES = 3;
   const SAFEFIELDS = COLUMNS * ROWS - MINES;
 
   const ref = useRef(null);
@@ -18,19 +18,18 @@ function Board({ gameOverIsVictory }) {
   const [safeFieldsRemaining, setSafeFieldsRemaining] = useState(COLUMNS * ROWS - MINES);
 
   useEffect(() => {
-    const boardMatrix = createBoard(COLUMNS, ROWS, MINES);
-    setBoardMatrix(boardMatrix);
-  }, []);
+    if (gameIsRunning) {
+      const boardMatrix = createBoard(COLUMNS, ROWS, MINES);
+      setBoardMatrix(boardMatrix);
+      setSafeFieldsRemaining(COLUMNS * ROWS - MINES);
+    }
+  }, [gameIsRunning]);
 
   useEffect(() => {
     if (safeFieldsRemaining <= 0) {
       gameOverIsVictory(true);
     }
   }, [safeFieldsRemaining]);
-
-  useEffect(() => {
-    console.log(ref.current ? ref.current.offsetWidth : 0);
-  }, [ref.current]);
 
   const revealField = (x, y) => {
     if (boardMatrix[x][y].isFlagged || boardMatrix[x][y].isRevealed) return;

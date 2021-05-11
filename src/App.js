@@ -6,40 +6,55 @@ import { useEffect, useState } from 'react';
 import './App.scss';
 
 function App() {
+  const MAXFINALTIME = 1000;
+
+  const [gameIsRunning, setGameIsRunning] = useState(true);
   const [isVictory, setIsVictory] = useState(undefined);
-  const [clock, setClock] = useState(0);
+  const [finalTime, setFinalTime] = useState(-1);
+  const [highScore, setHighScore] = useState(MAXFINALTIME);
 
   function gameOverIsVictory(isVictory) {
     setIsVictory(isVictory);
+    setGameIsRunning(false);
+  }
+
+  function updateFinalTime(time) {
+    setFinalTime(time);
   }
 
   function restart() {
-    window.location.reload();
+    setGameIsRunning(true);
+    setIsVictory(undefined);
+    setFinalTime(-1);
   }
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setClock(clock => clock + 1);
-    }, 1000);
-
-    if (isVictory !== undefined) {
-      clearInterval(timer);
-    };
-
-    return () => clearInterval(timer);
-  }, [isVictory]);
+    if (isVictory && finalTime < highScore) {
+      setHighScore(finalTime);
+    }
+  }, [finalTime]);
 
   return (
     <div className="App">
       <BoardSizeContext.Provider value={300}>
-        <Header clock={clock} />
+        <Header
+          gameIsRunning={gameIsRunning}
+          isVictory={isVictory}
+          updateFinalTime={updateFinalTime}
+        />
         <Board
+          gameIsRunning={gameIsRunning}
           gameOverIsVictory={gameOverIsVictory}
         />
-        {isVictory !== undefined
-          ? <EndScreen isVictory={isVictory} restart={restart} />
-          : ""}
       </BoardSizeContext.Provider>
+      {!gameIsRunning && finalTime >= 0
+        ? <EndScreen
+          isVictory={isVictory}
+          restart={restart}
+          finalTime={finalTime}
+          highScore={highScore}
+        />
+        : ""}
     </div>
   );
 }
