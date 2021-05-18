@@ -1,4 +1,4 @@
-function revealFields(boardMatrix, x, y, ROWS, COLUMNS) {
+function revealFields(boardMatrix, x, y, COLUMNS, ROWS) {
   if (!boardMatrix[x][y].isRevealed) {
     boardMatrix[x][y].isRevealed = true;
     boardMatrix[x][y].isFlagged = false;
@@ -26,14 +26,14 @@ function revealFields(boardMatrix, x, y, ROWS, COLUMNS) {
       value !== undefined);
 
   coordinateOfNeighborToReveal.forEach(neighbor => {
-    revealFields(boardMatrix, neighbor.x, neighbor.y, ROWS, COLUMNS);
+    revealFields(boardMatrix, neighbor.x, neighbor.y, COLUMNS, ROWS);
   });
 
   return boardMatrix;
 }
 
-function checkNeighbor(boardMatrix, x, y, ROWS, COLUMNS) {
-  if (x < 0 || x > ROWS - 1 || y < 0 || y > COLUMNS - 1) return;
+function checkNeighbor(boardMatrix, x, y, COLUMNS, ROWS) {
+  if (x < 0 || x > COLUMNS - 1 || y < 0 || y > ROWS - 1) return;
   if (boardMatrix[x][y].isRevealed) return;
 
   return { x, y };

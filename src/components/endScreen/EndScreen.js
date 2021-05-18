@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./endScreen.scss";
 import { VscDebugRestart } from "react-icons/vsc";
 import { AiOutlineClockCircle, AiOutlineTrophy } from "react-icons/ai";
+import formatTime from "../../util/timeFormatter";
 
 function EndScreen({ isVictory, restart, finalTime, highScore }) {
   const RESTARTICONSIZE = 24;
@@ -33,11 +34,6 @@ function EndScreen({ isVictory, restart, finalTime, highScore }) {
         </div>
       </div>
     );
-  }
-  
-  function formatTime(time) {
-    const formattedTime = time.toString().padStart(3, "0");
-    return formattedTime;
   }
 
   return (

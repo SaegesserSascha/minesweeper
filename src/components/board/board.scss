@@ -6,7 +6,7 @@
   justify-content: center;
 }
 
-.column-even > .field[data-isRevealed=false] {
+.column-even > .field[data-isrevealed=false] {
   &:nth-of-type(even) {
     background-color: $clr-field;
   }
@@ -16,7 +16,7 @@
   }
 }
 
-.column-odd > .field[data-isRevealed=false] {
+.column-odd > .field[data-isrevealed=false] {
   &:nth-of-type(even) {
     background-color: $clr-field-alternative;
   }
@@ -26,7 +26,7 @@
   }
 }
 
-.column-even > .field[data-isRevealed=true] {
+.column-even > .field[data-isrevealed=true] {
   &:nth-of-type(even) {
     background-color: $clr-field-revealed;
   }
@@ -36,7 +36,7 @@
   }
 }
 
-.column-odd > .field[data-isRevealed=true] {
+.column-odd > .field[data-isrevealed=true] {
   &:nth-of-type(even) {
     background-color: $clr-field-revealed-alternative;
   }
@@ -46,8 +46,8 @@
   }
 }
 
-.column-even > .field[data-isRevealed=false]:hover,
-.column-odd > .field[data-isRevealed=false]:hover {
+.column-even > .field[data-isrevealed=false]:hover,
+.column-odd > .field[data-isrevealed=false]:hover {
   background-color: $clr-field-hover;
   cursor: pointer;
 }

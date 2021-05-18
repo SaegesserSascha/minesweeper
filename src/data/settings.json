@@ -1,0 +1,5 @@
+[
+  {"columns": 15, "rows": 10, "mines": 15},
+  {"columns": 20, "rows": 15, "mines": 38},
+  {"columns": 25, "rows": 20, "mines": 83}
+]

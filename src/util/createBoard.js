@@ -1,11 +1,11 @@
-const createBoard = (ROWS, COLUMNS, MINES) => {
-  if (ROWS <= 0 || COLUMNS <= 0) return;
+const createBoard = ({ columns, rows, mines }) => {
+  if (columns <= 0 || rows <= 0) return;
 
   let boardMatrix = [];
 
-  for (let i = 0; i < ROWS; i++) {
+  for (let i = 0; i < columns; i++) {
     let column = [];
-    for (let j = 0; j < COLUMNS; j++) {
+    for (let j = 0; j < rows; j++) {
       column.push({
         x: i,
         y: j,
@@ -17,11 +17,11 @@ const createBoard = (ROWS, COLUMNS, MINES) => {
     boardMatrix.push(column);
   }
 
-  if (MINES > 0) {
+  if (mines > 0) {
     let mineCount = 0;
-    while (mineCount < MINES) {
-      let x = Math.floor(Math.random() * ROWS);
-      let y = Math.floor(Math.random() * COLUMNS);
+    while (mineCount < mines) {
+      let x = Math.floor(Math.random() * columns);
+      let y = Math.floor(Math.random() * rows);
 
       if (boardMatrix[x][y].value === 0) {
         boardMatrix[x][y].value = "X";
@@ -30,12 +30,12 @@ const createBoard = (ROWS, COLUMNS, MINES) => {
     }
   }
 
-  calculateNeighborMinesCount(boardMatrix, ROWS, COLUMNS);
+  calculateNeighborminesCount(boardMatrix, columns, rows);
 
   return boardMatrix;
 }
 
-function calculateNeighborMinesCount(boardMatrix, ROWS, COLUMNS) {
+function calculateNeighborminesCount(boardMatrix, columns, rows) {
   const neighborDeltas = [
     [-1, +0],
     [-1, +1],
@@ -47,12 +47,12 @@ function calculateNeighborMinesCount(boardMatrix, ROWS, COLUMNS) {
     [-1, -1]
   ];
 
-  for (let x = 0; x < ROWS; x++) {
-    for (let y = 0; y < COLUMNS; y++) {
+  for (let x = 0; x < columns; x++) {
+    for (let y = 0; y < rows; y++) {
       if (boardMatrix[x][y].value === "X") continue;
 
       neighborDeltas.forEach(delta => {
-        if (checkNeighbor(boardMatrix, x + delta[0], y + delta[1], ROWS, COLUMNS)) {
+        if (checkNeighbor(boardMatrix, x + delta[0], y + delta[1], columns, rows)) {
           boardMatrix[x][y].value++;
         }
       });
@@ -60,8 +60,8 @@ function calculateNeighborMinesCount(boardMatrix, ROWS, COLUMNS) {
   }
 }
 
-function checkNeighbor(boardMatrix, x, y, ROWS, COLUMNS) {
-  if (x < 0 || x > ROWS - 1 || y < 0 || y > COLUMNS - 1) return;
+function checkNeighbor(boardMatrix, x, y, columns, rows) {
+  if (x < 0 || x > columns - 1 || y < 0 || y > rows - 1) return;
 
   if (boardMatrix[x][y].value === "X") return true;
 }
