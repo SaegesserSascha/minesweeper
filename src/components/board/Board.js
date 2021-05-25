@@ -1,8 +1,8 @@
-import Field from "components/field/Field";
-import React, { useEffect, useRef, useState } from "react";
-import createBoard from "util/createBoard";
-import uuid from "react-uuid";
 import "./board.scss";
+import React, { useEffect, useRef, useState } from "react";
+import uuid from "react-uuid";
+import Field from "components/field/Field";
+import createBoard from "util/createBoard";
 import revealFields from "util/revealFields";
 
 function Board({ gameIsRunning, gameOverIsVictory, settings, flags, setFlags }) {
@@ -19,36 +19,13 @@ function Board({ gameIsRunning, gameOverIsVictory, settings, flags, setFlags }) 
       setBoardMatrix(boardMatrix);
       setFlags(0);
     }
-  }, [mines, settings, gameIsRunning, setFlags]);
+  }, [settings, gameIsRunning, setFlags]);
 
   useEffect(() => {
-    if (undetectedMinesRemaining <= 0 && flags === mines) {
+    if (undetectedMinesRemaining <= 0 && flags >= mines) {
       gameOverIsVictory(true);
     }
   }, [flags, gameOverIsVictory, mines, undetectedMinesRemaining]);
-
-  const revealField = (x, y) => {
-    if (boardMatrix[x][y].isFlagged || boardMatrix[x][y].isRevealed) return;
-    if (boardMatrix[x][y].value === "X") {
-      gameOverIsVictory(false);
-    }
-
-    const boardMatrixCopy = [...boardMatrix];
-    const updatedBoardMatrix = revealFields(boardMatrixCopy, x, y, settings);
-    updateSafeFieldsRemaining(updatedBoardMatrix);
-    setBoardMatrix(updatedBoardMatrix);
-  }
-
-  const toggleFlag = (e, x, y) => {
-    if (boardMatrix[x][y].isRevealed) return;
-    if (flags >= mines && !boardMatrix[x][y].isFlagged) return; 
-
-    e.preventDefault();
-    let boardMatrixCopy = [...boardMatrix];
-    boardMatrixCopy[x][y].isFlagged = !boardMatrixCopy[x][y].isFlagged;
-    updateSafeFieldsRemaining(boardMatrixCopy);
-    setBoardMatrix(boardMatrixCopy);
-  }
 
   function updateSafeFieldsRemaining(boardMatrix) {
     let undetectedMinesRemaining = columns * rows;
@@ -69,25 +46,47 @@ function Board({ gameIsRunning, gameOverIsVictory, settings, flags, setFlags }) 
     setUndetectedMinesRemaining(undetectedMinesRemaining);
   }
 
+  const revealField = (x, y) => {
+    if (boardMatrix[x][y].isFlagged || boardMatrix[x][y].isRevealed) return;
+    if (boardMatrix[x][y].value === "X") {
+      gameOverIsVictory(false);
+    }
+
+    const boardMatrixCopy = [...boardMatrix];
+    const updatedBoardMatrix = revealFields(boardMatrixCopy, x, y, settings);
+    updateSafeFieldsRemaining(updatedBoardMatrix);
+    setBoardMatrix(updatedBoardMatrix);
+  }
+
+  const toggleFlag = (e, x, y) => {
+    if (boardMatrix[x][y].isRevealed) return;
+    if (flags >= mines && !boardMatrix[x][y].isFlagged) return;
+
+    e.preventDefault();
+
+    let boardMatrixCopy = [...boardMatrix];
+    boardMatrixCopy[x][y].isFlagged = !boardMatrixCopy[x][y].isFlagged;
+    updateSafeFieldsRemaining(boardMatrixCopy);
+    setBoardMatrix(boardMatrixCopy);
+  }
+
   const board = boardMatrix.map((column, index) => {
     return (
       <div
         key={uuid()}
-        className={(index % 2 === 0) ? `column-even` : `column-odd`}
+        className={(index % 2) ? `column-even` : `column-odd`}
       >
-        {
-          column.map(field => {
-            return (
-              <Field
-                key={uuid()}
-                data={field}
-                toggleFlag={toggleFlag}
-                revealField={revealField}
-              />
-            );
-          })
-        }
-      </div >
+        {column.map(field => {
+          return (
+            <Field
+              key={uuid()}
+              data={field}
+              toggleFlag={toggleFlag}
+              revealField={revealField}
+            />
+          );
+        })}
+      </div>
     );
   });
 
