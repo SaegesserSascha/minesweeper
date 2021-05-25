@@ -1,7 +1,7 @@
-import React from "react";
 import "./field.scss";
-import { FaBomb } from "react-icons/fa";
+import React from "react";
 import { BsFillFlagFill } from "react-icons/bs";
+import { FaBomb } from "react-icons/fa";
 
 function Field({ data, revealField, toggleFlag }) {
   function displayData() {
@@ -20,8 +20,8 @@ function Field({ data, revealField, toggleFlag }) {
         data-value={data.value}
         data-isflagged={data.isFlagged}
       >
-        {data.isFlagged ? <BsFillFlagFill /> : ""}
-        {data.isRevealed ? displayData() : ""}
+        {data.isFlagged && <BsFillFlagFill />}
+        {data.isRevealed && displayData()}
       </div>
     </div>
   );
