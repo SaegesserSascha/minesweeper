@@ -1,6 +1,6 @@
 import neighborDeltas from "./neighborDeltas";
 
-function revealFields(boardMatrix, x, y, COLUMNS, ROWS) {
+function revealFields(boardMatrix, x, y, settings) {
   if (!boardMatrix[x][y].isRevealed) {
     boardMatrix[x][y].isRevealed = true;
     boardMatrix[x][y].isFlagged = false;
@@ -10,21 +10,21 @@ function revealFields(boardMatrix, x, y, COLUMNS, ROWS) {
     return boardMatrix;
   }
 
-  const coordinateOfNeighborToReveal =
+  const coordinatesToReveal =
     neighborDeltas.map(delta => {
-      return checkNeighbor(boardMatrix, x + delta.x, y + delta.y, ROWS, COLUMNS);
+      return checkNeighbor(boardMatrix, x + delta.x, y + delta.y, settings);
     }).filter(value =>
       value !== undefined);
 
-  coordinateOfNeighborToReveal.forEach(neighbor => {
-    revealFields(boardMatrix, neighbor.x, neighbor.y, COLUMNS, ROWS);
+  coordinatesToReveal.forEach(neighbor => {
+    revealFields(boardMatrix, neighbor.x, neighbor.y, settings);
   });
 
   return boardMatrix;
 }
 
-function checkNeighbor(boardMatrix, x, y, COLUMNS, ROWS) {
-  if (x < 0 || x > COLUMNS - 1 || y < 0 || y > ROWS - 1) return;
+function checkNeighbor(boardMatrix, x, y, { columns, rows }) {
+  if (x < 0 || x > columns - 1 || y < 0 || y > rows - 1) return;
   if (boardMatrix[x][y].isRevealed) return;
 
   return { x, y };

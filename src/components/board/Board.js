@@ -34,7 +34,7 @@ function Board({ gameIsRunning, gameOverIsVictory, settings, flags, setFlags }) 
     }
 
     const boardMatrixCopy = [...boardMatrix];
-    const updatedBoardMatrix = revealFields(boardMatrixCopy, x, y, rows, columns);
+    const updatedBoardMatrix = revealFields(boardMatrixCopy, x, y, settings);
     updateSafeFieldsRemaining(updatedBoardMatrix);
     setBoardMatrix(updatedBoardMatrix);
   }
