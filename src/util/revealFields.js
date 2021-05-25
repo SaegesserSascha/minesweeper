@@ -1,3 +1,5 @@
+import {neighborDeltas} from "./neighborDeltas";
+
 function revealFields(boardMatrix, x, y, COLUMNS, ROWS) {
   if (!boardMatrix[x][y].isRevealed) {
     boardMatrix[x][y].isRevealed = true;
@@ -7,17 +9,6 @@ function revealFields(boardMatrix, x, y, COLUMNS, ROWS) {
   if (boardMatrix[x][y].value === "X" || boardMatrix[x][y].value > 0) {
     return boardMatrix;
   }
-
-  const neighborDeltas = [
-    [-1, +0],
-    [-1, +1],
-    [+0, +1],
-    [+1, +1],
-    [+1, +0],
-    [+1, -1],
-    [+0, -1],
-    [-1, -1]
-  ];
 
   const coordinateOfNeighborToReveal =
     neighborDeltas.map(delta => {

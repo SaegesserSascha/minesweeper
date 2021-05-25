@@ -1,3 +1,5 @@
+import {neighborDeltas} from "./neighborDeltas";
+
 const createBoard = ({ columns, rows, mines }) => {
   if (columns <= 0 || rows <= 0) return;
 
@@ -36,17 +38,6 @@ const createBoard = ({ columns, rows, mines }) => {
 }
 
 function calculateNeighborminesCount(boardMatrix, columns, rows) {
-  const neighborDeltas = [
-    [-1, +0],
-    [-1, +1],
-    [+0, +1],
-    [+1, +1],
-    [+1, +0],
-    [+1, -1],
-    [+0, -1],
-    [-1, -1]
-  ];
-
   for (let x = 0; x < columns; x++) {
     for (let y = 0; y < rows; y++) {
       if (boardMatrix[x][y].value === "X") continue;
