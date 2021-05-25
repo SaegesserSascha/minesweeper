@@ -1,9 +1,9 @@
+import './App.scss';
+import { useCallback, useEffect, useState } from 'react';
 import Board from 'components/board/Board';
 import EndScreen from 'components/endScreen/EndScreen';
 import Header from 'components/header/Header';
-import { useCallback, useEffect, useState } from 'react';
 import settingValues from "./data/settings";
-import './App.scss';
 
 function App() {
   const MAXFINALTIME = 1000;
@@ -67,13 +67,13 @@ function App() {
         setFlags={setFlags}
       />
       {shouldEndScreenDisplay
-        ? <EndScreen
-        isVictory={isVictory}
-        restart={restart}
-        finalTime={finalTime}
-        highScore={highScore}
-      />
-        : ""}
+        && <EndScreen
+          isVictory={isVictory}
+          restart={restart}
+          finalTime={finalTime}
+          highScore={highScore}
+        />
+      }
     </div>
   );
 }
